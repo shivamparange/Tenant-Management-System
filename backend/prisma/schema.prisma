@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  name          String?
+  email         String    @unique
+  password      String?
+  google_id     String?   @unique
+  profile_image String?
+  created_at    DateTime  @default(now())
+
+  properties    Property[]
+}
+
+model Property {
+  id            Int       @id @default(autoincrement())
+  user_id       Int?
+  property_name String
+  unit_number   String?
+  type          String?
+  address       String?
+  monthly_rent  Int       @default(0)
+  status        String    @default("Vacant") // Occupied / Vacant / Maintenance
+  notes         String?
+  created_at    DateTime  @default(now())
+
+  user          User?     @relation(fields: [user_id], references: [id])
+  tenants       Tenant[]
+  history       PropertyHistory[]
+  payments      RentPayment[]
+  images        PropertyImage[]
+  maintenance   MaintenanceRequest[]
+}
+
+model Tenant {
+  id            Int       @id @default(autoincrement())
+  property_id   Int?
+  name          String?
+  phone         String?
+  email         String?
+  move_in_date  DateTime?
+  deposit       Int?
+  created_at    DateTime  @default(now())
+
+  property      Property? @relation(fields: [property_id], references: [id])
+  rent_payments RentPayment[]
+  maintenance   MaintenanceRequest[]
+}
+
+model PropertyHistory {
+  id            Int       @id @default(autoincrement())
+  property_id   Int?
+  tenant_name   String?
+  phone         String?
+  move_in_date  DateTime?
+  move_out_date DateTime?
+  rent_amount   Int?
+  deposit       Int?
+  notes         String?
+
+  property      Property? @relation(fields: [property_id], references: [id])
+}
+
+model RentPayment {
+  id             Int       @id @default(autoincrement())
+  property_id    Int?
+  tenant_id      Int?
+  amount         Int?
+  payment_date   DateTime?
+  payment_method String?
+  status         String    @default("Pending") // Paid / Pending
+
+  property       Property? @relation(fields: [property_id], references: [id])
+  tenant         Tenant?   @relation(fields: [tenant_id], references: [id])
+}
+
+model PropertyImage {
+  id          Int      @id @default(autoincrement())
+  property_id Int?
+  image_url   String
+
+  property    Property? @relation(fields: [property_id], references: [id])
+}
+
+model MaintenanceRequest {
+  id          Int      @id @default(autoincrement())
+  property_id Int?
+  tenant_id   Int?
+  issue       String
+  status      String   @default("Open")
+  created_at  DateTime @default(now())
+
+  property    Property? @relation(fields: [property_id], references: [id])
+  tenant      Tenant?   @relation(fields: [tenant_id], references: [id])
+}

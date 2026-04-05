@@ -1,0 +1,117 @@
+.database-container {
+  max-width: 1100px;
+  width: 95%;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.db-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.db-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--text-primary);
+}
+
+.db-tabs {
+  display: flex;
+  background: rgba(0,0,0,0.1);
+  padding: 0 24px;
+  gap: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.db-tab {
+  background: transparent;
+  border: none;
+  padding: 16px 8px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+}
+
+.db-tab:hover {
+  color: var(--text-primary);
+}
+
+.db-tab.active {
+  color: var(--accent-primary);
+  border-bottom-color: var(--accent-primary);
+}
+
+.db-table-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 24px;
+}
+
+.db-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.db-table th {
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.05);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+
+.db-table td {
+  padding: 16px;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  white-space: nowrap;
+}
+
+.db-table tbody tr {
+  transition: background 0.2s;
+}
+
+.db-table tbody tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.db-id {
+  font-family: monospace;
+  color: var(--text-muted) !important;
+  cursor: help;
+}
+
+.db-empty {
+  text-align: center;
+  padding: 40px !important;
+  color: var(--text-muted) !important;
+  font-style: italic;
+}
+
+.db-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.db-badge-vacant { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+.db-badge-occupied { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+.db-badge-maintenance { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
