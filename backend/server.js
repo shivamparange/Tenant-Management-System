@@ -25,18 +25,14 @@ app.use(cors()); // Allow requests from your frontend
 app.use(bodyParser.json()); // Parse JSON request bodies
 
 // --- Database Connection ---
-const dbConfig = {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT || 3306,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
-};
+console.log("--- Checking Database Environment Variables ---");
+console.log("DATABASE_URL mapping found:", !!process.env.DATABASE_URL);
+console.log("-----------------------------------------------");
 
 let db;
 
 function connectToDatabase() {
-  db = mysql.createConnection(dbConfig);
+  db = mysql.createConnection(process.env.DATABASE_URL);
 
   db.connect(err => {
     if (err) {
@@ -44,7 +40,7 @@ function connectToDatabase() {
       console.error("The server will remain running, but database operations will fail until resolved.");
       // Optional: setTimeout(connectToDatabase, 5000); // Retry logic
     } else {
-      console.log(`[DB Success] Connected to MySQL Database '${process.env.DB_NAME}' on port ${process.env.DB_PORT || 3306}`);
+      console.log(`[DB Success] Connected to MySQL Database successfully`);
     }
   });
 
