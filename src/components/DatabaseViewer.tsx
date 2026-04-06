@@ -22,13 +22,13 @@ const DatabaseViewer: React.FC<DatabaseViewerProps> = ({ properties, currentUser
     if (activeTab === 'users') fetchUsers();
   }, [activeTab]);
 
-  const handleUpdateUserRole = async (uid: string, newRole: string) => {
-    console.log(uid, newRole);
+  const handleUpdateUserRole = async (id: string, newRole: string) => {
+    console.log(id, newRole);
     alert('User role update requires backend API.');
   };
 
-  const handleDeleteUser = async (uid: string) => {
-    console.log(uid);
+  const handleDeleteUser = async (id: string) => {
+    console.log(id);
     alert('User deletion requires backend API.');
   };
 
@@ -216,8 +216,8 @@ const DatabaseViewer: React.FC<DatabaseViewerProps> = ({ properties, currentUser
               </thead>
               <tbody>
                 {users.map(u => (
-                  <tr key={u.uid}>
-                    <td className="db-id" title={u.uid}>{u.uid?.substring(0, 8)}...</td>
+                  <tr key={u.id}>
+                    <td className="db-id" title={u.id}>{u.id?.substring(0, 8)}...</td>
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <img src={u.photo} alt={u.name} style={{ width: 24, height: 24, borderRadius: '50%' }} />
@@ -229,7 +229,7 @@ const DatabaseViewer: React.FC<DatabaseViewerProps> = ({ properties, currentUser
                        <select 
                          className="btn-glass" 
                          value={u.role || 'tenant'} 
-                         onChange={(e) => handleUpdateUserRole(u.uid!, e.target.value as any)}
+                         onChange={(e) => handleUpdateUserRole(u.id!, e.target.value as any)}
                          style={{ padding: '4px 8px', fontSize: '0.8rem' }}
                        >
                          <option value="admin">Admin</option>
@@ -238,7 +238,7 @@ const DatabaseViewer: React.FC<DatabaseViewerProps> = ({ properties, currentUser
                        </select>
                     </td>
                     <td>
-                       <button className="btn-icon-small btn-danger-text" onClick={() => handleDeleteUser(u.uid!)} title="Delete User">
+                       <button className="btn-icon-small btn-danger-text" onClick={() => handleDeleteUser(u.id!)} title="Delete User">
                           <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                           </svg>
