@@ -10,7 +10,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ properties }) => {
   
   // Real stats from our new API
   useEffect(() => {
-    fetch("http://localhost:5000/dashboard-stats")
+    fetch(`${process.env.REACT_APP_API_URL}/dashboard-stats`)
       .then(res => res.json())
       .then(data => setTotalUnits(data.total_properties))
       .catch(err => console.error("Failed to fetch dashboard stats", err));

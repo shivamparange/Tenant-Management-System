@@ -18,7 +18,7 @@ const MaintenanceRequestsAdmin: React.FC<MaintenanceRequestsAdminProps> = ({ onC
   const fetchRequests = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/maintenance-requests");
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/maintenance-requests`);
       if (res.ok) {
         setRequests(await res.json());
       }
@@ -31,7 +31,7 @@ const MaintenanceRequestsAdmin: React.FC<MaintenanceRequestsAdminProps> = ({ onC
 
   const handleUpdateStatus = async (id: string, newStatus: string) => {
     try {
-      const res = await fetch(`http://localhost:5000/maintenance-requests/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/maintenance-requests/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus })

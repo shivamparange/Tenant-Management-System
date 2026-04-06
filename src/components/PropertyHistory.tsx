@@ -39,7 +39,7 @@ const PropertyHistory: React.FC<PropertyHistoryProps> = ({ property, initialMode
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("http://localhost:5000/all-users");
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/all-users`);
       if (res.ok) {
         const data = await res.json();
         setUsers(data);
@@ -52,7 +52,7 @@ const PropertyHistory: React.FC<PropertyHistoryProps> = ({ property, initialMode
   const fetchHistory = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/history/${property.id}`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/history/${property.id}`);
       if (res.ok) {
         const data = await res.json();
         // Map backend fields to frontend types if needed
@@ -139,7 +139,7 @@ const PropertyHistory: React.FC<PropertyHistoryProps> = ({ property, initialMode
     };
 
     try {
-      const response = await fetch("http://localhost:5000/add-tenant", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/add-tenant`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

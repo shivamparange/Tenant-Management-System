@@ -37,7 +37,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ initialData, onSave, onCanc
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("http://localhost:5000/all-users");
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/all-users`);
       if (res.ok) {
         const data = await res.json();
         setUsers(data);

@@ -60,7 +60,7 @@ function App() {
     }
     
     try {
-      const res = await fetch("http://localhost:5000/properties");
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/properties`);
       if (!res.ok) throw new Error("API failed");
       const data = await res.json();
       
@@ -125,7 +125,7 @@ function App() {
       let savedPropertyId = property.id;
       if (editingProperty) {
          // PUT request for updating
-         const response = await fetch("http://localhost:5000/property", {
+         const response = await fetch(`${process.env.REACT_APP_API_URL}/property`, {
            method: "PUT",
            headers: { "Content-Type": "application/json" },
            body: JSON.stringify({
@@ -142,7 +142,7 @@ function App() {
          if (!response.ok) throw new Error("Failed to update property");
       } else {
          // POST request for adding
-         const response = await fetch("http://localhost:5000/add-property", {
+         const response = await fetch(`${process.env.REACT_APP_API_URL}/add-property`, {
            method: "POST",
            headers: { "Content-Type": "application/json" },
            body: JSON.stringify({
@@ -174,7 +174,7 @@ function App() {
           rent_amount: property.rent,
           rent_due_day: 5
         };
-        const tr = await fetch("http://localhost:5000/add-tenant", {
+        const tr = await fetch(`${process.env.REACT_APP_API_URL}/add-tenant`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(tenantPayload)
@@ -202,7 +202,7 @@ function App() {
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this property?')) {
       try {
-        const response = await fetch("http://localhost:5000/property", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/property`, {
            method: "DELETE",
            headers: { "Content-Type": "application/json" },
            body: JSON.stringify({ id })

@@ -44,7 +44,7 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess, onNavigateLogin }) =
     setLoading(true);
     try {
       // 1) Make API call to backend /signup
-      const response = await fetch("http://localhost:5000/signup", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

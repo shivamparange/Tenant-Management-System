@@ -22,14 +22,14 @@ const TenantDashboard: React.FC<TenantDashboardProps> = ({ user }) => {
     setLoading(true);
     try {
       // 1. Fetch assigned property
-      const propRes = await fetch(`http://localhost:5000/tenant/property/${user.id}`);
+      const propRes = await fetch(`${process.env.REACT_APP_API_URL}/tenant/property/${user.id}`);
       if (propRes.ok) {
         const propData = await propRes.json();
         setProperty(propData);
       }
 
       // 2. Fetch maintenance requests
-      const compRes = await fetch(`http://localhost:5000/tenant-maintenance/${user.id}`);
+      const compRes = await fetch(`${process.env.REACT_APP_API_URL}/tenant-maintenance/${user.id}`);
       if (compRes.ok) {
         const compData = await compRes.json();
         setComplaints(compData);
@@ -45,7 +45,7 @@ const TenantDashboard: React.FC<TenantDashboardProps> = ({ user }) => {
     if (!property) return;
 
     try {
-      const response = await fetch("http://localhost:5000/create-payment", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/create-payment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: property.rent })
@@ -63,7 +63,7 @@ const TenantDashboard: React.FC<TenantDashboardProps> = ({ user }) => {
         payment_method: "UPI"
       };
 
-      const successRes = await fetch("http://localhost:5000/payment-success", {
+      const successRes = await fetch(`${process.env.REACT_APP_API_URL}/payment-success`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(paymentSuccess)
@@ -83,7 +83,7 @@ const TenantDashboard: React.FC<TenantDashboardProps> = ({ user }) => {
     if (!description || !property) return;
 
     try {
-      const response = await fetch("http://localhost:5000/api/maintenance-request", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/maintenance-request`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -30,7 +30,7 @@ const TenantPayments: React.FC<TenantPaymentsProps> = ({ property, tenant, onUpd
     };
 
     try {
-      const response = await fetch("http://localhost:5000/add-payment", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/add-payment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -66,7 +66,7 @@ const TenantPayments: React.FC<TenantPaymentsProps> = ({ property, tenant, onUpd
     const newDate = newStatus === 'paid' ? new Date().toISOString().split('T')[0] : undefined;
 
     try {
-      const response = await fetch("http://localhost:5000/payment-status", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/payment-status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: paymentId, status: newStatus, paymentDate: newDate })
@@ -92,7 +92,7 @@ const TenantPayments: React.FC<TenantPaymentsProps> = ({ property, tenant, onUpd
   const handleDeletePayment = async (paymentId: string) => {
     if (window.confirm('Delete this payment record?')) {
       try {
-        const response = await fetch(`http://localhost:5000/payment/${paymentId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/payment/${paymentId}`, {
           method: "DELETE"
         });
         if (response.ok) {
