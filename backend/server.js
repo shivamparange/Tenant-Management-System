@@ -21,7 +21,12 @@ const port = 5000;
 // });
 
 // Middleware
-app.use(cors()); // Allow requests from your frontend
+app.use(cors({
+  origin: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+})); // Allow requests from your Vercel frontend
 app.use(bodyParser.json()); // Parse JSON request bodies
 
 // --- Database Connection ---
@@ -32,6 +37,12 @@ console.log("-----------------------------------------------");
 let db;
 
 function connectToDatabase() {
+  if (!process.env.DATABASE_URL) {
+    console.error(`[DB Error] Connection failed: DATABASE_URL is not defined in environment`);
+    console.error("The server will remain running, but database operations will fail until resolved.");
+    return;
+  }
+
   db = mysql.createConnection(process.env.DATABASE_URL);
 
   db.connect(err => {
