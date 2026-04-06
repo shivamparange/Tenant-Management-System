@@ -1,4 +1,5 @@
 // backend/server.js
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -24,21 +25,39 @@ app.use(cors()); // Allow requests from your frontend
 app.use(bodyParser.json()); // Parse JSON request bodies
 
 // --- Database Connection ---
-const db = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "Shivam@504401",
-  database: "parange_estates"
-});
+const dbConfig = {
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+};
 
-db.connect(err => {
-  if(err){
-    console.log("Database connection failed: " + err.stack);
-  } else {
-    console.log("Database connected to parange_estates");
-  }
-});
+let db;
+
+function connectToDatabase() {
+  db = mysql.createConnection(dbConfig);
+
+  db.connect(err => {
+    if (err) {
+      console.error(`[DB Error] Connection failed: ${err.message}`);
+      console.error("The server will remain running, but database operations will fail until resolved.");
+      // Optional: setTimeout(connectToDatabase, 5000); // Retry logic
+    } else {
+      console.log(`[DB Success] Connected to MySQL Database '${process.env.DB_NAME}' on port ${process.env.DB_PORT || 3306}`);
+    }
+  });
+
+  db.on('error', err => {
+    console.error(`[DB Error] Unexpected error: ${err.message}`);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'ECONNRESET' || err.code === 'ECONNREFUSED') {
+      console.log("Attempting to reconnect...");
+      connectToDatabase();
+    }
+  });
+}
+
+connectToDatabase();
 // -------------------------------------------------------------------------
 
 
