@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
-import type { User } from '../types';
 interface SignupPageProps {
   onSuccess: (message: string) => void;
   onNavigateLogin: () => void;

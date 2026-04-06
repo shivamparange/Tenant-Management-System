@@ -3,6 +3,7 @@ export type PropertyType = 'room' | 'flat' | 'villa' | 'gala' | 'farmhouse';
 
 export interface User {
   id?: string;
+  uid?: string | number;
   name: string;
   email: string;
   mobile?: string;
